@@ -1,0 +1,41 @@
+{
+  "name": "envome/core",
+  "homepage": "http://envo.me",
+  "support": {
+    "issues": "https://github.com/envome/core/issues",
+    "source": "https://github.com/envome/core"
+  },
+  "authors": [
+    {
+      "name": "Omer Mohamed Ali",
+      "email": "om@envo.me"
+    },
+    {
+      "name": "Christian Marbach",
+      "email": "christianmarbach01@gmail.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "php": ">=7.1",
+    "symfony/console": "3.1.10",
+    "adhocore/cron-expr": "1.1.2",
+    "erusev/parsedown": "1.7.3"
+  },
+  "autoload": {
+    "files": [
+      "src/Envo/Helper.php"
+    ],
+    "psr-4": {
+      "Envo\\": ["src/Envo", "src/Envo/Abstract"]
+    }
+  },
+  "require-dev": {
+    "phalcon/incubator": "^3.2",
+    "codeception/codeception": "^3.1"
+  },
+  "dist": {
+    "url": "git@bitbucket.org:envome/core.git",
+    "type": "git"
+  }
+}

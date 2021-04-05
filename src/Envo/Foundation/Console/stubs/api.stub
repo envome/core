@@ -1,0 +1,163 @@
+<?php
+
+namespace DummyNamespace;
+
+use DummyModule\Event\DummyCreated;
+use DummyModule\Event\DummyUpdated;
+use DummyModule\Event\DummyDeleted;
+
+use Envo\AbstractAPI;
+use Envo\AbstractModel;
+use Envo\Support\Date;
+use Phalcon\Mvc\Model\Query\Builder;
+
+/**
+ * Class Dummy
+ * @package DummyNamespace
+ *
+ * @property \DummyModule\DTO\DummyDTO $dto
+ * @property \NamespacedDummyUserModel $user
+ * @property \DummyModule\Model\Dummy $model
+ */
+class DummyClass extends AbstractAPI
+{
+	/**
+	 * Here you can override the default API options such as the 'identifier'
+	 * that should be used to identify the corresponding entities
+	 *
+	 * @return void
+	 */
+	public function init()
+	{
+		return $this->user && $this->user->isLoggedIn();
+	}
+
+	/**
+	 * Do some authorization check before allowing users to interact with this API endpoint
+	 *
+	 * @return bool
+	 */
+	public function authorize()
+	{
+		return $this->user->isLoggedIn();
+	}
+
+	/**
+	 * Here you can extend the query when fetching all the entities
+	 * like only allowing the user to access his own collection
+	 * The response is paginated
+	 *
+	 * @param Builder $builder
+	 */
+	public function index($builder)
+	{
+
+	}
+
+	/**
+	 * Extend the logic when retrieving one entity with an identifier
+	 *
+	 * @param Builder $builder
+	 * @param int $id
+	 */
+	public function show($builder, $id)
+	{
+
+	}
+
+	/**
+	 * Pre update hook
+	 *
+	 * @throws \Envo\Exception\PublicException
+	 */
+	public function preUpdate()
+	{
+		$exists = $this->model->repo()->where('name = :name:', [
+			'name' => $this->dto->name,
+		])->getOne();
+
+		if($exists && $this->model->getId() !== $exists->getId()) {
+			public_exception('validation.exists', 409);
+		}
+
+		$this->model->updated_at = Date::now();
+	}
+
+	/**
+	 * Pre create hook
+	 *
+	 * @throws \Envo\Exception\PublicException
+	 */
+	public function preCreate()
+	{
+		$exists = $this->model->repo()->where('name = :name:', [
+			'name' => $this->dto->name,
+		])->getOne();
+
+		if($exists) {
+			public_exception('validation.exists', 409);
+		}
+
+		$this->model->created_at = Date::now();
+	}
+
+	/**
+	 * Pre persist hook
+	 *
+	 * @return void|bool
+	 */
+	public function prePersist()
+	{
+		$this->model->name = $this->dto->name;
+	}
+
+	/**
+	 * Post create hook
+	 *
+	 * $return void|bool
+	 */
+	public function postCreate()
+	{
+		new DummyCreated(null, true, $this->model, $this->dto);
+	}
+
+	/**
+	 * Post create hook
+	 */
+	public function postUpdate()
+	{
+		new DummyUpdated(null, true, $this->model, $this->dto);
+	}
+
+	/**
+	 * Post create hook
+	 */
+	public function postDelete()
+	{
+		new DummyDeleted(null, true, $this->model, $this->dto);
+	}
+
+	/**
+	 * Cast the entity response the way you need it
+	 *
+	 * @param AbstractModel|\stdClass $model
+	 * @param array $definition
+	 *
+	 * @return mixed
+	 */
+	public function transformItem($model, $definition)
+	{
+
+	}
+
+	/**
+	 * Validate the data that is passed to the API
+	 *
+	 * @return array
+	 * @throws \Envo\Exception\PublicException
+	 */
+	public function validate()
+	{
+		return [];
+	}
+}
