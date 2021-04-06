@@ -8,7 +8,6 @@ use Envo\AbstractException;
 use Envo\AbstractEvent;
 
 use Phalcon\Events\Event;
-use Phalcon\Mvc\User\Plugin;
 use Phalcon\Dispatcher;
 use Phalcon\Mvc\Dispatcher as MvcDispatcher;
 

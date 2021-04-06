@@ -38,7 +38,7 @@ use Phalcon\Mvc\View\Engine\Php;
  * Class Application
  * @package Envo
  */
-class Application extends \Phalcon\Mvc\Application
+class Application extends Phalcon\Application\AbstractApplication
 {
     public const APP_ENV_TESTING = 'testing';
     public const APP_ENV_PRODUCTION = 'production';
@@ -386,7 +386,7 @@ class Application extends \Phalcon\Mvc\Application
                 ]);
             } else {
                 session_save_path($config->get('session.files', APP_PATH.'storage/framework/sessions'));
-                $session = new \Phalcon\Session\Adapter\Files([
+                $session = new \Phalcon\Session\Adapter\Stream([
                     'uniqueId' => $config->get('session.prefix', '')
                 ]);
             }
