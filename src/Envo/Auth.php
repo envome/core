@@ -12,12 +12,13 @@ use Envo\Event\LoggedIn;
 
 use Envo\Support\Str;
 use Envo\Support\Translator;
-use Phalcon\Mvc\User\Component;
+// use Phalcon\Mvc\Acl\Component;
 
 /**
  * Class Auth
  */
-class Auth extends Component
+// class Auth extends Component
+class Auth extends \Phalcon\Di\Injectable
 {
     public const TOKEN_NAME = 'auth-identity';
     public const COOKIE_REMEMBER = 'remember_rmu';
