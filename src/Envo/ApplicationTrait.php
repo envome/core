@@ -25,7 +25,7 @@ use Phalcon\Mvc\Dispatcher;
 use Phalcon\Mvc\Model;
 use Phalcon\Mvc\Model\Manager as ModelManager;
 use Phalcon\Mvc\Model\MetaData\Files;
-use Phalcon\Mvc\Url;
+use Phalcon\Url;
 
 trait ApplicationTrait
 {
@@ -162,7 +162,7 @@ trait ApplicationTrait
         if (!file_exists(APP_PATH . '.env')) {
             return;
         }
-        
+
         $config = parse_ini_file(APP_PATH . '.env');
 
         if (getenv('APP_ENV') === 'testing') {

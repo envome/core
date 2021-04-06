@@ -30,7 +30,7 @@ use Phalcon\Mvc\Model;
 use Phalcon\Mvc\Model\Manager as ModelManager;
 use Phalcon\Mvc\Model\Metadata\Files;
 use Phalcon\Mvc\Router\Route;
-use Phalcon\Mvc\Url;
+use Phalcon\Url;
 use Phalcon\Mvc\View;
 use Phalcon\Mvc\View\Engine\Php;
 
