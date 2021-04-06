@@ -147,9 +147,9 @@ trait ApplicationTrait
         /**
          * Read configuration file
          */
-        if (! file_exists(APP_PATH . '.env')) {
-            throw new \Exception('app.envConfigurationFileNotFound', 500);
-        }
+        // if (! file_exists(APP_PATH . '.env')) {
+            // throw new \Exception('app.envConfigurationFileNotFound', 500);
+        // }
 
 //        require_once APP_PATH. DIRECTORY_SEPARATOR .'vendor'. DIRECTORY_SEPARATOR .'autoload.php';
     }
@@ -159,6 +159,10 @@ trait ApplicationTrait
      */
     public function setupEnv()
     {
+        if (!file_exists(APP_PATH . '.env')) {
+            return;
+        }
+        
         $config = parse_ini_file(APP_PATH . '.env');
 
         if (getenv('APP_ENV') === 'testing') {
