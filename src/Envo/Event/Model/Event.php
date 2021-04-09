@@ -45,11 +45,8 @@ class Event extends AbstractModel
 		$this->hasOne('event_type_id', $eventType, 'id', ['alias' => 'type']);
 		$this->hasOne('user_id', $userClass, 'id', ['alias' => 'user']);
 		$this->hasOne('ip_id', $userIpClass, 'id', ['alias' => 'ip']);
-	}
-
-	public function getSource()
-	{
-		return config('app.events.table', $this->table);
+		
+		$this->setSource(config('app.events.table', $this->table));
 	}
 
 	public function index($attributes, $user)
