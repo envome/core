@@ -21,7 +21,7 @@ use Phalcon\Mvc\View\Engine\Php;
  * Class Application
  * @package Envo
  */
-class Application extends \Phalcon\Application\AbstractApplication
+class Application extends \Phalcon\Mvc\Application
 {
     public const APP_ENV_TESTING = 'testing';
     public const APP_ENV_PRODUCTION = 'production';
@@ -131,7 +131,7 @@ class Application extends \Phalcon\Application\AbstractApplication
                 return $this;
             }
 
-            echo $this->handle()->getContent();
+            echo $this->handle($_SERVER["REQUEST_URI"] ?? '')->getContent();
         } catch (\Exception $exception) {
             envo_exception_handler($exception);
         }

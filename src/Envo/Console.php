@@ -31,13 +31,11 @@ use Envo\Fuse\Console\StartCommand;
 use Envo\Queue\Console\WorkCommand;
 use Envo\Support\Str;
 
-use Phalcon\Db\Adapter\Pdo\Mysql;
-use Phalcon\Db\Adapter\Pdo\Sqlite;
 use Phalcon\Di;
 use Phalcon\DI\FactoryDefault;
 use Symfony\Component\Console\Application;
 
-class Console extends \Phalcon\Application
+class Console extends \Phalcon\Mvc\Application
 {
     use ApplicationTrait;
 
