@@ -12,25 +12,8 @@ use Envo\Foundation\Router;
 use Envo\Support\Str;
 use Envo\Support\Translator;
 
-use Phalcon\Cache\Backend\File;
-use Phalcon\Cache\Frontend\Data as FrontendData;
-use Phalcon\Db\Adapter\Pdo\Mysql;
-use Phalcon\Db\Adapter\Pdo\Sqlite;
-use Phalcon\Db\Profiler;
 use Phalcon\DI;
-use Phalcon\Escaper;
-use Phalcon\Events\Event;
-use Phalcon\Events\Manager;
-use Phalcon\Events\Manager as EventManager;
-use Phalcon\Http\Request;
-use Phalcon\Http\Response;
 use Phalcon\Http\Response\Cookies;
-use Phalcon\Mvc\Dispatcher;
-use Phalcon\Mvc\Model;
-use Phalcon\Mvc\Model\Manager as ModelManager;
-use Phalcon\Mvc\Model\Metadata\Files;
-use Phalcon\Mvc\Router\Route;
-use Phalcon\Url;
 use Phalcon\Mvc\View;
 use Phalcon\Mvc\View\Engine\Php;
 
@@ -38,7 +21,7 @@ use Phalcon\Mvc\View\Engine\Php;
  * Class Application
  * @package Envo
  */
-class Application extends Phalcon\Application\AbstractApplication
+class Application extends \Phalcon\Application\AbstractApplication
 {
     public const APP_ENV_TESTING = 'testing';
     public const APP_ENV_PRODUCTION = 'production';
@@ -365,25 +348,25 @@ class Application extends Phalcon\Application\AbstractApplication
             $driver = $config->get('session.driver', 'file');
 
             if ($driver === 'redis') {
-                $session = new \Phalcon\Session\Adapter\Redis([
-                    'prefix'     => $config->get('session.prefix', ''),
-                    'uniqueId'   => $config->get('database.uniqueId', ''),
-                    'lifetime'   => $config->get('session.lifetime', 120) * 60,
-                    'persistent' => $config->get('database.redis.default.persistent', false),
-                    'index'      => $config->get('database.redis.default.database', 0),
-                    'auth'       => $config->get('database.redis.default.auth', ''),
-                    'port'       => $config->get('database.redis.default.port', 6379),
-                    'host'       => $config->get('database.redis.default.host', '127.0.0.1'),
-                ]);
+                //$session = new \Phalcon\Session\Adapter\Redis([
+                //    'prefix'     => $config->get('session.prefix', ''),
+                //    'uniqueId'   => $config->get('database.uniqueId', ''),
+                //    'lifetime'   => $config->get('session.lifetime', 120) * 60,
+                //    'persistent' => $config->get('database.redis.default.persistent', false),
+                //    'index'      => $config->get('database.redis.default.database', 0),
+                //    'auth'       => $config->get('database.redis.default.auth', ''),
+                //    'port'       => $config->get('database.redis.default.port', 6379),
+                //    'host'       => $config->get('database.redis.default.host', '127.0.0.1'),
+                //]);
             } elseif ($driver === 'memcache') {
-                $session = new \Phalcon\Session\Adapter\Memcache([
-                    'uniqueId'   => $config->get('database.uniqueId', ''),
-                    'host'       => $config->get('database.host', '127.0.0.1'),
-                    'port'       => $config->get('database.port', 11211),
-                    'persistent' => $config->get('database.persistent', true),
-                    'lifetime'   => $config->get('session.lifetime', 3600),
-                    'prefix'     => $config->get('session.prefix', ''),
-                ]);
+                //$session = new \Phalcon\Session\Adapter\Memcache([
+                //    'uniqueId'   => $config->get('database.uniqueId', ''),
+                //    'host'       => $config->get('database.host', '127.0.0.1'),
+                //    'port'       => $config->get('database.port', 11211),
+                //    'persistent' => $config->get('database.persistent', true),
+                //    'lifetime'   => $config->get('session.lifetime', 3600),
+                //    'prefix'     => $config->get('session.prefix', ''),
+                //]);
             } else {
                 session_save_path($config->get('session.files', APP_PATH.'storage/framework/sessions'));
                 $session = new \Phalcon\Session\Adapter\Stream([
@@ -411,7 +394,7 @@ class Application extends Phalcon\Application\AbstractApplication
         $di->setShared('router', function () use ($di, $config) {
             $router = new Router(false);
             $router->removeExtraSlashes(true);
-            $router->setUriSource(Router::URI_SOURCE_SERVER_REQUEST_URI);
+            //$router->setUriSource(Router::URI_SOURCE_SERVER_REQUEST_URI);
 
             if (file_exists(APP_PATH . 'bootstrap/cache/routes.php')) {
                 $routes = require_once APP_PATH . 'bootstrap/cache/routes.php';
