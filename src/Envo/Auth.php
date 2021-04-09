@@ -92,7 +92,10 @@ class Auth extends \Phalcon\Di\Injectable
         }
 
         // TODO: if no session class is defined then return empty user object
-        $auth = @$this->session->get(self::TOKEN_NAME);
+        $auth = null;
+        if ($this->session) {
+            $auth = @$this->session->get(self::TOKEN_NAME);
+        }
 
         $user = null;
         if (! $auth) {
