@@ -374,9 +374,9 @@ class Application extends \Phalcon\Mvc\Application
                 ]);
             }
 
-            if (!$session->isStarted()) {
-                $session->start();
-            }
+            //if (!$session->isStarted()) {
+            //    $session->start();
+            //}
 
             return $session;
         });
