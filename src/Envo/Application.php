@@ -16,6 +16,7 @@ use Phalcon\DI;
 use Phalcon\Http\Response\Cookies;
 use Phalcon\Mvc\View;
 use Phalcon\Mvc\View\Engine\Php;
+use Phalcon\Session\Manager;
 
 /**
  * Class Application
@@ -346,7 +347,8 @@ class Application extends \Phalcon\Mvc\Application
 
         $di->setShared('session', function () use ($config) {
             $driver = $config->get('session.driver', 'file');
-
+    
+            $session = new Manager();
             if ($driver === 'redis') {
                 //$session = new \Phalcon\Session\Adapter\Redis([
                 //    'prefix'     => $config->get('session.prefix', ''),
@@ -369,14 +371,16 @@ class Application extends \Phalcon\Mvc\Application
                 //]);
             } else {
                 session_save_path($config->get('session.files', APP_PATH.'storage/framework/sessions'));
-                $session = new \Phalcon\Session\Adapter\Stream([
+                $files = new \Phalcon\Session\Adapter\Stream([
                     'uniqueId' => $config->get('session.prefix', '')
                 ]);
+                
+                $session->setAdapter($files);
             }
 
-            //if (!$session->isStarted()) {
-            //    $session->start();
-            //}
+            if (!$session->exists()) {
+                $session->start();
+            }
 
             return $session;
         });
